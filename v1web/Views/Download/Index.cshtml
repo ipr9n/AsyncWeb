@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            @using (Html.BeginForm("DownloadPages", "Download", FormMethod.Post, new { id = "downloadform" }))
+            {
+                <input type="text" id="pages" name="pages" />
+                <br />
+                <button type="button" onclick="addTextBox()">Добавить еще сайт</button>
+                <br />
+                <input type="submit" value="Скачать" />
+                <br />
+            }
+
+            <input type="button" onclick="CancelDownload()" value="Отменить загрузку" />
+            <br />
+        </div>
+        <div class="col-md-6">
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/jscript">
+    function CancelDownload() {
+        $.get("/Download/CancelDownload");
+    };
+    function addTextBox() {
+        $('#downloadform').prepend('<input type="text" id="pages" name="pages" /><br />');
+    };
+</script>

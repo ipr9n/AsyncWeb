@@ -1,0 +1,49 @@
+﻿@model List<v1web.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1>
+    @Html.ActionLink("Корзина", "Cart", "Shop")
+</h1>
+<div class="container-fluid">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6">
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                        <p class="card-text">Стоимость: @item.Price</p>
+                        <a href="#" class="btn btn-primary" onclick="addItem(@item.Id)">Добавить в корзину</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<h1><span id="infozone"></span></h1>
+<script>
+    function getCartSummary() {
+         $.post("@Url.Action("GetCartSummary")").done(function (data) {
+            $("#infozone").text("Total products in cart: " + data.TotalCount + "\nTotal products coast: " + data.TotalCoast)
+        })
+    }
+
+    window.onload = getCartSummary
+
+    function addItem(id){
+        var values =
+            {
+            "productId": id,
+                "count": 1
+            }
+        $.post("@Url.Action("AddToCart")", values).done(function (data) {
+            $("#infozone").text("Total products in cart: "+data.TotalCount+"\nTotal products coast: "+data.TotalCoast)
+        });
+    }
+</script>
