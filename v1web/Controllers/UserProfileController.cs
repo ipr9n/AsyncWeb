@@ -11,6 +11,7 @@ using v1web.Models;
 
 namespace v1web.Controllers
 {
+    [Authorize]
     public class UserProfileController : Controller
     {
         ApplicationDbContext _db;
